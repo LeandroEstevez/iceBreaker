@@ -17,7 +17,7 @@ def lookup(name: str) -> str:
         Tool(
             name="Crawl Google 4 linkedin profile page",
             func=get_profile_url,
-            description="useful for when you need to get the Linkedin Page URL",
+            description="useful for when you need to get the LinkedIn Page URL",
         )
     ]
 
