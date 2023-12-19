@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from langchain.prompts import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
@@ -7,9 +9,9 @@ from output_parsers import person_intel_parser, PersonIntel
 from third_parties.linkedin import scrape_linkedin_profile
 
 
-def ice_break(name: str) -> PersonIntel:
+def ice_break(name: str) -> Tuple[PersonIntel, str]:
+    print(name)
     linkedin_profile_url = linkedin_lookup_agent(name=name)
-    print(linkedin_profile_url)
 
     summary_template = """
         given the Linkedin information {information} about a person from I want you to create:
@@ -36,9 +38,9 @@ def ice_break(name: str) -> PersonIntel:
 
     result = chain.run(information=linkedin_data)
 
-    return person_intel_parser.parse(result)
+    return person_intel_parser.parse(result), linkedin_data.get("profile_pic_url")
 
 
-if __name__ == "__main__":
-    parsed_result = ice_break(name="Eden Marco Udemy")
-    print(parsed_result)
+# if __name__ == "__main__":
+#     parsed_result = ice_break(name="Eden Marco Udemy")
+#     print(parsed_result)
